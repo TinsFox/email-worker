@@ -11,7 +11,7 @@ import { formatTable } from "./lib/log";
 
 import { env } from "cloudflare:workers";
 
-// import { handleEmail } from "./lib/mail/index.mjs";
+import { handleEmail } from "./lib/mail/index.mjs";
 import { adminMiddleware } from "./middleware/auth-middleware";
 
 const app = new Hono();
@@ -65,5 +65,5 @@ formatTable(serverInfo);
 
 export default {
 	fetch: app.fetch,
-	// email: handleEmail,
+	email: handleEmail,
 };

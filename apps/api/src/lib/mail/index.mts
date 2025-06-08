@@ -8,48 +8,44 @@ import { forwardEmailToTelegram } from "./forward/telegram.js";
 
 import type { EmailData, EmailStorage } from "./types.js";
 
-export async function handleEmail(
-	message: EmailMessage,
+async function parseEmail(message: EmailMessage): Promise<EmailData> {
+	const parser = new PostalMime.default();
+	const rawEmail = new Response(message.raw);
+	const email = await parser.parse(await rawEmail.arrayBuffer());
+
+	return {
+		from: email.from?.address || message.from,
+		to: (email.to || []).map((t) => t?.address || "").filter(Boolean),
+		subject: email.subject || "(No Subject)",
+		text: email.text || "",
+		html: email.html,
+		date: new Date(email.date || Date.now()),
+		attachments: (email.attachments || []).map((att) => ({
+			filename: att.filename || "unnamed",
+			mimeType: att.mimeType || "application/octet-stream",
+			content: att.content instanceof ArrayBuffer ? att.content : "",
+			size: att.content instanceof ArrayBuffer ? att.content.byteLength : 0,
+			disposition: att.disposition || "attachment",
+		})),
+		messageId: email.messageId || nanoid(),
+		inReplyTo: email.inReplyTo,
+		replyTo: (email.replyTo || []).map((r) => r.address || "").filter(Boolean),
+		references: Array.isArray(email.references) ? email.references : [],
+		headers: Object.fromEntries(
+			(email.headers || []).map((h) => [h.key, h.value]),
+		),
+	};
+}
+
+async function handleAttachments(
 	env: Env,
-	ctx: ExecutionContext,
-): Promise<void> {
-	try {
-		const parser = new PostalMime.default();
-		const rawEmail = new Response(message.raw);
-		const email = await parser.parse(await rawEmail.arrayBuffer());
-
-		const emailData: EmailData = {
-			from: email.from?.address || message.from,
-			to: (email.to || []).map((t) => t?.address || "").filter(Boolean),
-			subject: email.subject || "(No Subject)",
-			text: email.text || "",
-			html: email.html,
-			date: new Date(email.date || Date.now()),
-			attachments: (email.attachments || []).map((att) => ({
-				filename: att.filename || "unnamed",
-				mimeType: att.mimeType || "application/octet-stream",
-				content: att.content instanceof ArrayBuffer ? att.content : "",
-				size: att.content instanceof ArrayBuffer ? att.content.byteLength : 0,
-				disposition: att.disposition || "attachment",
-			})),
-			messageId: email.messageId || nanoid(),
-			inReplyTo: email.inReplyTo,
-			replyTo: (email.replyTo || [])
-				.map((r) => r.address || "")
-				.filter(Boolean),
-			references: Array.isArray(email.references) ? email.references : [],
-			headers: Object.fromEntries(
-				(email.headers || []).map((h) => [h.key, h.value]),
-			),
-		};
-
-		// 获取收件箱信息（从收件人地址中提取）
-		const mailbox = message.to.split("@")[0];
-
-		// 处理附件并上传到R2
-		const attachmentUrls: string[] = [];
-		if (env.R2_BUCKET && emailData.attachments.length > 0) {
-			for (const attachment of emailData.attachments) {
+	mailbox: string,
+	attachments: EmailData["attachments"],
+): Promise<string[]> {
+	const attachmentUrls: string[] = [];
+	if (env.R2_BUCKET && attachments.length > 0) {
+		try {
+			for (const attachment of attachments) {
 				const date = new Date();
 				const key = `${mailbox}/${date.getUTCFullYear()}/${date.getUTCMonth() + 1}/${nanoid()}-${attachment.filename}`;
 				await env.R2_BUCKET.put(key, attachment.content, {
@@ -59,35 +55,79 @@ export async function handleEmail(
 				});
 				attachmentUrls.push(key);
 			}
+		} catch (error) {
+			console.error("Error handling attachments:", {
+				error,
+				errorMessage: error instanceof Error ? error.message : String(error),
+				mailbox,
+			});
+			throw error;
 		}
+	}
+	return attachmentUrls;
+}
 
-		// 创建存储对象
-		const emailStorage: EmailStorage = {
-			id: nanoid(),
-			mailbox,
-			emailData,
-			attachmentUrls,
-			createdAt: new Date(),
-		};
+async function saveToDatabase(emailStorage: EmailStorage) {
+	try {
+		// 确保 to 和 references 是数组
+		const toArray = Array.isArray(emailStorage.emailData.to)
+			? emailStorage.emailData.to
+			: [emailStorage.emailData.to];
 
-		// 存储到数据库
+		const referencesArray = Array.isArray(emailStorage.emailData.references)
+			? emailStorage.emailData.references
+			: emailStorage.emailData.references
+				? [emailStorage.emailData.references]
+				: [];
+
+		// 确保 headers 是一个有效的对象
+		const headers =
+			typeof emailStorage.emailData.headers === "string"
+				? JSON.parse(emailStorage.emailData.headers)
+				: emailStorage.emailData.headers;
+
+		// 确保 html 是字符串或 null
+		const html = emailStorage.emailData.html || null;
+
+		// 确保文本内容不为 undefined
+		const text = emailStorage.emailData.text || "";
+
+		// 确保日期是有效的
+		const createdAt = new Date(emailStorage.createdAt);
+
 		await db.insert(emails).values({
 			id: emailStorage.id,
 			mailbox: emailStorage.mailbox,
 			from: emailStorage.emailData.from,
-			to: emailStorage.emailData.to,
-			text: emailStorage.emailData.text,
-			html: emailStorage.emailData.html || null,
+			to: toArray,
+			text,
+			html,
 			messageId: emailStorage.emailData.messageId,
 			inReplyTo: emailStorage.emailData.inReplyTo || null,
-			references: emailStorage.emailData.references,
-			headers: emailStorage.emailData.headers,
+			references: referencesArray,
+			headers,
 			subject: emailStorage.emailData.subject,
-			createdAt: emailStorage.createdAt,
+			createdAt,
 		});
+	} catch (error) {
+		console.error("Error saving to database:", {
+			error,
+			errorMessage: error instanceof Error ? error.message : String(error),
+			emailId: emailStorage.id,
+			mailbox: emailStorage.mailbox,
+			data: {
+				to: emailStorage.emailData.to,
+				references: emailStorage.emailData.references,
+				headers: emailStorage.emailData.headers,
+			},
+		});
+		throw error;
+	}
+}
 
-		// 转发邮件（如果配置了转发地址）
-		if (env.FORWARD_TO_ADDRESSES) {
+async function handleForwarding(message: EmailMessage, env: Env) {
+	if (env.FORWARD_TO_ADDRESSES) {
+		try {
 			const forwardAddresses = env.FORWARD_TO_ADDRESSES.split(",").map(
 				(addr: string) => addr.trim(),
 			);
@@ -97,19 +137,84 @@ export async function handleEmail(
 					await message.forward(forwardAddress);
 				}
 			}
+		} catch (error) {
+			console.error("Error forwarding email:", {
+				error,
+				errorMessage: error instanceof Error ? error.message : String(error),
+				from: message.from,
+				to: message.to,
+			});
+			throw error;
 		}
+	}
+}
 
-		// 发送通知
-		// await sendNotifications(emailStorage, env);
+export async function handleEmail(
+	message: EmailMessage,
+	env: Env,
+	ctx: ExecutionContext,
+): Promise<void> {
+	try {
+		console.log("message: ", message);
+		// 1. 解析邮件
+		const emailData = await parseEmail(message);
+		console.log("Email parsed successfully");
 
+		// 2. 获取收件箱信息
+		const mailbox = message.to.split("@")[0];
+
+		// 3. 处理附件
+		const attachmentUrls = await handleAttachments(
+			env,
+			mailbox,
+			emailData.attachments,
+		);
+		console.log("Attachments handled successfully");
+
+		// 4. 创建存储对象
+		const emailStorage: EmailStorage = {
+			id: nanoid(),
+			mailbox,
+			emailData,
+			attachmentUrls,
+			createdAt: new Date(),
+		};
+
+		// 5. 存储到数据库
+		console.log("emailStorage: ", emailStorage);
+		await saveToDatabase(emailStorage);
+		console.log("Email saved to database successfully");
+
+		// 6. 处理转发
+		await handleForwarding(message, env);
+		console.log("Email forwarding handled successfully");
+
+		// 7. 发送 Telegram 通知
 		if (env.TELEGRAM_CHAT_ID) {
-			await forwardEmailToTelegram(
-				emailStorage.emailData,
-				env.TELEGRAM_CHAT_ID,
-			);
+			try {
+				await forwardEmailToTelegram(
+					emailStorage.emailData,
+					env.TELEGRAM_CHAT_ID,
+				);
+				console.log("Telegram notification sent successfully");
+			} catch (error) {
+				console.error("Error sending Telegram notification:", {
+					error,
+					errorMessage: error instanceof Error ? error.message : String(error),
+					chatId: env.TELEGRAM_CHAT_ID,
+				});
+				// 不抛出错误，因为这是非关键功能
+			}
 		}
 	} catch (error) {
-		console.error("Error processing email:", error);
+		console.error("Error processing email:", {
+			error,
+			errorMessage: error instanceof Error ? error.message : String(error),
+			errorStack: error instanceof Error ? error.stack : undefined,
+			mailbox: message.to.split("@")[0],
+			from: message.from,
+			to: message.to,
+		});
 		throw error;
 	}
 }

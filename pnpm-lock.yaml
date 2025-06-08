@@ -307,8 +307,8 @@ importers:
         specifier: ^0.17.1
         version: 0.17.1(hono@4.7.5)(zod@3.24.2)
       '@neondatabase/serverless':
-        specifier: ^0.10.4
-        version: 0.10.4
+        specifier: ^1.0.1
+        version: 1.0.1
       '@react-email/components':
         specifier: ^0.0.34
         version: 0.0.34(react-dom@19.1.0(react@19.0.0-rc.1))(react@19.0.0-rc.1)
@@ -323,10 +323,10 @@ importers:
         version: 1.2.7
       drizzle-orm:
         specifier: ^0.44.2
-        version: 0.44.2(@cloudflare/workers-types@4.20250607.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.11)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)(postgres@3.4.5)
+        version: 0.44.2(@cloudflare/workers-types@4.20250607.0)(@neondatabase/serverless@1.0.1)(@types/pg@8.11.11)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)(postgres@3.4.5)
       drizzle-zod:
         specifier: ^0.8.2
-        version: 0.8.2(drizzle-orm@0.44.2(@cloudflare/workers-types@4.20250607.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.11)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)(postgres@3.4.5))(zod@3.24.2)
+        version: 0.8.2(drizzle-orm@0.44.2(@cloudflare/workers-types@4.20250607.0)(@neondatabase/serverless@1.0.1)(@types/pg@8.11.11)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)(postgres@3.4.5))(zod@3.24.2)
       fast-xml-parser:
         specifier: ^4.3.5
         version: 4.5.3
@@ -540,7 +540,7 @@ importers:
         version: 1.3.2(react@18.3.1)
       '@tailwindcss/typography':
         specifier: ^0.5.16
-        version: 0.5.16(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3)))
+        version: 0.5.16(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3)))
       '@tanstack/react-table':
         specifier: ^8.21.2
         version: 8.21.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -558,7 +558,7 @@ importers:
         version: 7.54.2(react@18.3.1)
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3)))
+        version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3)))
       zod:
         specifier: ^3.24.2
         version: 3.24.2
@@ -580,7 +580,7 @@ importers:
         version: 8.6.8(@storybook/test@8.6.8(storybook@8.6.8(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.8(prettier@3.4.2))(typescript@5.6.3)
       '@storybook/react-vite':
         specifier: ^8.6.8
-        version: 8.6.8(@storybook/test@8.6.8(storybook@8.6.8(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.40.1)(storybook@8.6.8(prettier@3.4.2))(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6))
+        version: 8.6.8(@storybook/test@8.6.8(storybook@8.6.8(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.40.1)(storybook@8.6.8(prettier@3.4.2))(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6))
       '@storybook/test':
         specifier: ^8.6.8
         version: 8.6.8(storybook@8.6.8(prettier@3.4.2))
@@ -592,7 +592,7 @@ importers:
         version: 18.3.5(@types/react@18.3.19)
       '@vitejs/plugin-react-swc':
         specifier: ^3.8.1
-        version: 3.8.1(@swc/helpers@0.5.15)(vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6))
+        version: 3.8.1(@swc/helpers@0.5.15)(vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6))
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
@@ -613,16 +613,16 @@ importers:
         version: 2.6.0
       tailwindcss:
         specifier: ^3.4.17
-        version: 3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3))
+        version: 3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3))
       typescript:
         specifier: ~5.6.3
         version: 5.6.3
       vite:
         specifier: ^5.4.14
-        version: 5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6)
+        version: 5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6)
       vite-tsconfig-paths:
         specifier: ^5.1.4
-        version: 5.1.4(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6))
+        version: 5.1.4(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6))
 
   packages/telegram-bot-sdk:
     dependencies:
@@ -2879,8 +2879,9 @@ packages:
   '@napi-rs/wasm-runtime@0.2.7':
     resolution: {integrity: sha512-5yximcFK5FNompXfJFoWanu5l8v1hNGqNHh9du1xETp9HWk/B/PzvchX55WYOPaIeNglG8++68AAiauBAtbnzw==}
 
-  '@neondatabase/serverless@0.10.4':
-    resolution: {integrity: sha512-2nZuh3VUO9voBauuh+IGYRhGU/MskWHt1IuZvHcJw6GLjDgtqj/KViKo7SIrLdGLdot7vFbiRRw+BgEy3wT9HA==}
+  '@neondatabase/serverless@1.0.1':
+    resolution: {integrity: sha512-O6yC5TT0jbw86VZVkmnzCZJB0hfxBl0JJz6f+3KHoZabjb/X08r9eFA+vuY06z1/qaovykvdkrXYq3SPUuvogA==}
+    engines: {node: '>=19.0.0'}
 
   '@next/env@15.0.3':
     resolution: {integrity: sha512-t9Xy32pjNOvVn2AS+Utt6VmyrshbpfUMhIjFO60gI58deSo/KgLOp31XZ4O+kY/Is8WAGYwA5gR7kOb1eORDBA==}
@@ -5636,11 +5637,11 @@ packages:
   '@types/node@22.15.3':
     resolution: {integrity: sha512-lX7HFZeHf4QG/J7tBZqrCAXwz9J5RD56Y6MpP0eJkka8p+K0RY/yBTW7CYFJ4VGCclxqOLKmiGP5juQc6MKgcw==}
 
+  '@types/node@22.15.30':
+    resolution: {integrity: sha512-6Q7lr06bEHdlfplU6YRbgG1SFBdlsfNC4/lX+SkhiTs0cpJkOElmWls8PxDFv4yY/xKb8Y6SO0OmSX4wgqTZbA==}
+
   '@types/pg@8.11.11':
     resolution: {integrity: sha512-kGT1qKM8wJQ5qlawUrEkXgvMSXoV213KfMGXcwfDwUIfUHXqXYXOfS1nE1LINRJVVVx5wCm70XnFlMHaIcQAfw==}
-
-  '@types/pg@8.11.6':
-    resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
@@ -13321,12 +13322,12 @@ snapshots:
     dependencies:
       '@sinclair/typebox': 0.27.8
 
-  '@joshwooding/vite-plugin-react-docgen-typescript@0.5.0(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6))':
+  '@joshwooding/vite-plugin-react-docgen-typescript@0.5.0(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6))':
     dependencies:
       glob: 10.4.5
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2(typescript@5.6.3)
-      vite: 5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6)
+      vite: 5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6)
     optionalDependencies:
       typescript: 5.6.3
 
@@ -13416,9 +13417,10 @@ snapshots:
       '@tybys/wasm-util': 0.9.0
     optional: true
 
-  '@neondatabase/serverless@0.10.4':
+  '@neondatabase/serverless@1.0.1':
     dependencies:
-      '@types/pg': 8.11.6
+      '@types/node': 22.15.30
+      '@types/pg': 8.11.11
 
   '@next/env@15.0.3': {}
 
@@ -15674,13 +15676,13 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@storybook/builder-vite@8.6.8(storybook@8.6.8(prettier@3.4.2))(vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6))':
+  '@storybook/builder-vite@8.6.8(storybook@8.6.8(prettier@3.4.2))(vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6))':
     dependencies:
       '@storybook/csf-plugin': 8.6.8(storybook@8.6.8(prettier@3.4.2))
       browser-assert: 1.2.1
       storybook: 8.6.8(prettier@3.4.2)
       ts-dedent: 2.2.0
-      vite: 5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6)
+      vite: 5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6)
 
   '@storybook/builder-vite@8.6.8(storybook@8.6.8(prettier@3.4.2))(vite@6.3.4(@types/node@20.17.25)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.31.6)(tsx@4.19.3)(yaml@2.8.0))':
     dependencies:
@@ -15766,11 +15768,11 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
       storybook: 8.6.8(prettier@3.4.2)
 
-  '@storybook/react-vite@8.6.8(@storybook/test@8.6.8(storybook@8.6.8(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.40.1)(storybook@8.6.8(prettier@3.4.2))(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6))':
+  '@storybook/react-vite@8.6.8(@storybook/test@8.6.8(storybook@8.6.8(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.40.1)(storybook@8.6.8(prettier@3.4.2))(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6))':
     dependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': 0.5.0(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6))
+      '@joshwooding/vite-plugin-react-docgen-typescript': 0.5.0(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6))
       '@rollup/pluginutils': 5.1.0(rollup@4.40.1)
-      '@storybook/builder-vite': 8.6.8(storybook@8.6.8(prettier@3.4.2))(vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6))
+      '@storybook/builder-vite': 8.6.8(storybook@8.6.8(prettier@3.4.2))(vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6))
       '@storybook/react': 8.6.8(@storybook/test@8.6.8(storybook@8.6.8(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.8(prettier@3.4.2))(typescript@5.6.3)
       find-up: 5.0.0
       magic-string: 0.30.12
@@ -15780,7 +15782,7 @@ snapshots:
       resolve: 1.22.8
       storybook: 8.6.8(prettier@3.4.2)
       tsconfig-paths: 4.2.0
-      vite: 5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6)
+      vite: 5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6)
     optionalDependencies:
       '@storybook/test': 8.6.8(storybook@8.6.8(prettier@3.4.2))
     transitivePeerDependencies:
@@ -16004,13 +16006,13 @@ snapshots:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.13.11)(typescript@5.8.2))
 
-  '@tailwindcss/typography@0.5.16(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3)))':
+  '@tailwindcss/typography@0.5.16(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3)))':
     dependencies:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3))
 
   '@tanstack/query-core@5.69.0': {}
 
@@ -16441,15 +16443,13 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
+  '@types/node@22.15.30':
+    dependencies:
+      undici-types: 6.21.0
+
   '@types/pg@8.11.11':
     dependencies:
       '@types/node': 22.13.11
-      pg-protocol: 1.7.0
-      pg-types: 4.0.2
-
-  '@types/pg@8.11.6':
-    dependencies:
-      '@types/node': 22.15.18
       pg-protocol: 1.7.0
       pg-types: 4.0.2
 
@@ -16659,10 +16659,10 @@ snapshots:
   '@unrs/rspack-resolver-binding-win32-x64-msvc@1.2.2':
     optional: true
 
-  '@vitejs/plugin-react-swc@3.8.1(@swc/helpers@0.5.15)(vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6))':
+  '@vitejs/plugin-react-swc@3.8.1(@swc/helpers@0.5.15)(vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6))':
     dependencies:
       '@swc/core': 1.11.11(@swc/helpers@0.5.15)
-      vite: 5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6)
+      vite: 5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6)
     transitivePeerDependencies:
       - '@swc/helpers'
 
@@ -17894,19 +17894,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.44.2(@cloudflare/workers-types@4.20250607.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.11)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)(postgres@3.4.5):
+  drizzle-orm@0.44.2(@cloudflare/workers-types@4.20250607.0)(@neondatabase/serverless@1.0.1)(@types/pg@8.11.11)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)(postgres@3.4.5):
     optionalDependencies:
       '@cloudflare/workers-types': 4.20250607.0
-      '@neondatabase/serverless': 0.10.4
+      '@neondatabase/serverless': 1.0.1
       '@types/pg': 8.11.11
       gel: 2.0.1
       kysely: 0.27.6
       pg: 8.14.1
       postgres: 3.4.5
 
-  drizzle-zod@0.8.2(drizzle-orm@0.44.2(@cloudflare/workers-types@4.20250607.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.11)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)(postgres@3.4.5))(zod@3.24.2):
+  drizzle-zod@0.8.2(drizzle-orm@0.44.2(@cloudflare/workers-types@4.20250607.0)(@neondatabase/serverless@1.0.1)(@types/pg@8.11.11)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)(postgres@3.4.5))(zod@3.24.2):
     dependencies:
-      drizzle-orm: 0.44.2(@cloudflare/workers-types@4.20250607.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.11)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)(postgres@3.4.5)
+      drizzle-orm: 0.44.2(@cloudflare/workers-types@4.20250607.0)(@neondatabase/serverless@1.0.1)(@types/pg@8.11.11)(gel@2.0.1)(kysely@0.27.6)(pg@8.14.1)(postgres@3.4.5)
       zod: 3.24.2
 
   dts-resolver@2.0.1: {}
@@ -21194,13 +21194,13 @@ snapshots:
       postcss: 8.5.3
       ts-node: 10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.13.11)(typescript@5.8.2)
 
-  postcss-load-config@4.0.2(postcss@8.5.3)(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3)):
+  postcss-load-config@4.0.2(postcss@8.5.3)(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3)):
     dependencies:
       lilconfig: 3.1.3
       yaml: 2.7.0
     optionalDependencies:
       postcss: 8.5.3
-      ts-node: 10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3)
+      ts-node: 10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3)
 
   postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(yaml@2.8.0):
     dependencies:
@@ -22640,9 +22640,9 @@ snapshots:
     dependencies:
       tailwindcss: 3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.13.11)(typescript@5.8.2))
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3))):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3))):
     dependencies:
-      tailwindcss: 3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3))
 
   tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@20.17.25)(typescript@5.8.2)):
     dependencies:
@@ -22698,7 +22698,7 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3)):
+  tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -22717,7 +22717,7 @@ snapshots:
       postcss: 8.5.3
       postcss-import: 15.1.0(postcss@8.5.3)
       postcss-js: 4.0.1(postcss@8.5.3)
-      postcss-load-config: 4.0.2(postcss@8.5.3)(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3))
+      postcss-load-config: 4.0.2(postcss@8.5.3)(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3))
       postcss-nested: 6.2.0(postcss@8.5.3)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.8
@@ -22882,14 +22882,14 @@ snapshots:
       '@swc/core': 1.11.11(@swc/helpers@0.5.15)
     optional: true
 
-  ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.18)(typescript@5.6.3):
+  ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.15.30)(typescript@5.6.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 22.15.18
+      '@types/node': 22.15.30
       acorn: 8.14.0
       acorn-walk: 8.3.4
       arg: 4.1.3
@@ -23397,13 +23397,13 @@ snapshots:
       - tsx
       - yaml
 
-  vite-tsconfig-paths@5.1.4(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6)):
+  vite-tsconfig-paths@5.1.4(typescript@5.6.3)(vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6)):
     dependencies:
       debug: 4.3.7
       globrex: 0.1.2
       tsconfck: 3.1.1(typescript@5.6.3)
     optionalDependencies:
-      vite: 5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6)
+      vite: 5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -23441,13 +23441,13 @@ snapshots:
       lightningcss: 1.29.2
       terser: 5.31.6
 
-  vite@5.4.14(@types/node@22.15.18)(lightningcss@1.29.2)(terser@5.31.6):
+  vite@5.4.14(@types/node@22.15.30)(lightningcss@1.29.2)(terser@5.31.6):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.3
       rollup: 4.27.4
     optionalDependencies:
-      '@types/node': 22.15.18
+      '@types/node': 22.15.30
       fsevents: 2.3.3
       lightningcss: 1.29.2
       terser: 5.31.6

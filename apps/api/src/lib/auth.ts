@@ -5,7 +5,7 @@ import { admin, openAPI, username } from "better-auth/plugins";
 
 import { env } from "cloudflare:workers";
 import * as authSchema from "../../auth-schema";
-import { resend } from "./email/resend";
+import { sendEmail } from "./email/resend";
 import { reactResetPasswordEmail } from "./email/rest-password";
 const from = env.BETTER_AUTH_EMAIL;
 
@@ -18,28 +18,26 @@ export const auth = betterAuth({
 	}),
 	emailVerification: {
 		async sendVerificationEmail({ user, url }) {
-			const res = await resend.emails.send({
-				from,
-				to: user.email,
-				subject: "Verify your email address",
-				html: `<a href="${url}">Verify your email address</a>`,
-			});
+			const res = await sendEmail(
+				user.email,
+				"Verify your email address",
+				`<a href="${url}">Verify your email address</a>`,
+			);
 			console.log("email verification", res, user.email);
 		},
 	},
-	emailAndPassword: {
-		enabled: true,
-		async sendResetPassword({ user, url }) {
-			const res = await resend.emails.send({
-				from,
-				to: user.email,
-				subject: "Reset your password",
-				react: reactResetPasswordEmail({
-					username: user.email,
-					resetLink: url,
-				}),
-			});
-			console.log("email reset password", res, user.email);
-		},
-	},
+	// emailAndPassword: {
+	// 	enabled: true,
+	// 	async sendResetPassword({ user, url }) {
+	// 		const res = await sendEmail(
+	// 			user.email,
+	// 			"Reset your password",
+	// 			reactResetPasswordEmail({
+	// 				username: user.email,
+	// 				resetLink: url,
+	// 			}).render(),
+	// 		);
+	// 		console.log("email reset password", res, user.email);
+	// 	},
+	// },
 });
