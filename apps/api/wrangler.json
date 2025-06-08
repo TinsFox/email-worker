@@ -1,6 +1,6 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "mock-service",
+	"name": "mail-box",
 	"main": "src/index.ts",
 	"dev": {
 		"port": 2111
@@ -12,5 +12,11 @@
 	"compatibility_date": "2025-02-12",
 	"observability": {
 		"enabled": true
-	}
+	},
+	"r2_buckets": [
+		{
+			"binding": "R2_BUCKET",
+			"bucket_name": "mail"
+		}
+	]
 }

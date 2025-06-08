@@ -1,7 +1,5 @@
 import { cors } from "hono/cors";
 import { csrf } from "hono/csrf";
-import { albumRouter } from "./module/albums/albums";
-import { rbacRouter } from "./module/rbac/rbac";
 
 import { logger } from "hono/logger";
 import { requestId } from "hono/request-id";
@@ -10,11 +8,11 @@ import { Hono } from "hono";
 import { showRoutes } from "hono/dev";
 import { auth } from "./lib/auth";
 import { formatTable } from "./lib/log";
-import { openAPIMiddleware, scalarDocsMiddleware } from "./module/openapi";
 
 import { env } from "cloudflare:workers";
+
+// import { handleEmail } from "./lib/mail/index.mjs";
 import { adminMiddleware } from "./middleware/auth-middleware";
-import { taskRouter } from "./module/tasks/tasks";
 
 const app = new Hono();
 
@@ -32,14 +30,6 @@ app.get("/better-auth/reference", async (c) => {
 // API routes with /api prefix
 const apiApp = new Hono().basePath("/api");
 
-apiApp.get("/docs", scalarDocsMiddleware());
-apiApp.get("/docs/openapi", openAPIMiddleware(app));
-
-apiApp
-	.route("/albums", albumRouter)
-	.route("/tasks", taskRouter)
-	.route("/rbac", rbacRouter);
-
 apiApp.on(["POST", "GET"], "/auth/*", (c) => {
 	return auth.handler(c.req.raw);
 });
@@ -50,7 +40,6 @@ app.route("/", apiApp);
 app.notFound((c) => c.json({ message: "Not Found", ok: false }, 404));
 showRoutes(app, {
 	colorize: true,
-	// verbose: true,
 });
 const serverInfo = [
 	{ Description: "Server", URL: `http://localhost:${env.API_PORT}` },
@@ -76,4 +65,5 @@ formatTable(serverInfo);
 
 export default {
 	fetch: app.fetch,
+	// email: handleEmail,
 };
