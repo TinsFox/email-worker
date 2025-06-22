@@ -1,18 +1,5 @@
 import { z } from "@hono/zod-openapi";
 
-// 基础成功响应 Schema
-export const BaseSuccessSchema = z.object({
-	code: z.number().openapi({
-		description: "Response status code",
-		example: 200,
-	}),
-	msg: z.string().optional().openapi({
-		description: "Response message",
-		example: "Success",
-	}),
-});
-export type BaseSuccessSchemaType = z.infer<typeof BaseSuccessSchema>;
-
 // 基础错误响应 Schema
 export const BaseErrorSchema = z.object({
 	code: z.number().openapi({
@@ -23,29 +10,25 @@ export const BaseErrorSchema = z.object({
 		description: "Error message",
 		example: "Error occurred",
 	}),
-	data: z.null().optional(),
 });
 export type BaseErrorSchemaType = z.infer<typeof BaseErrorSchema>;
 
-// 基础详情响应 Schema
+// 基础详情响应 Schema - 直接返回数据
 export const BaseDetailSchema = <T extends z.ZodType>(dataSchema: T) =>
-	BaseSuccessSchema.extend({
-		data: dataSchema,
-	});
+	dataSchema;
 
-export type BaseDetailSchemaType<T extends z.ZodType> = z.infer<
-	ReturnType<typeof BaseDetailSchema<T>>
->;
+export type BaseDetailSchemaType<T extends z.ZodType> = z.infer<T>;
 
 // 基础分页响应 Schema
 export const BasePaginationSchema = <T extends z.ZodType>(dataSchema: T) =>
-	BaseSuccessSchema.extend({
+	z.object({
 		list: z.array(dataSchema),
 		total: z.number(),
 		page: z.number(),
 		pageSize: z.number(),
 		totalPages: z.number(),
 	});
+
 export type BasePaginationSchemaType<T extends z.ZodType> = z.infer<
 	ReturnType<typeof BasePaginationSchema<T>>
 >;

@@ -34,20 +34,16 @@ export const UpdateMailSchema = z.object({
 });
 
 export const MailResponseSchema = z.object({
-	code: z.number(),
-	msg: z.string(),
-	data: z.object({
-		id: z.string().uuid(),
-		from: z.string().email(),
-		to: z.array(z.string().email()),
-		subject: z.string(),
-		text: z.string(),
-		html: z.string().nullable(),
-		mailbox: z.string(),
-		messageId: z.string(),
-		inReplyTo: z.string().nullable(),
-		references: z.array(z.string()).nullable(),
-		headers: z.any(),
-		createdAt: z.string(),
-	}),
+	id: z.string().uuid(),
+	from: z.string().email(),
+	to: z.array(z.string().email()),
+	subject: z.string(),
+	text: z.string(),
+	html: z.string().nullable(),
+	mailbox: z.string(),
+	messageId: z.string(),
+	inReplyTo: z.string().nullable(),
+	references: z.array(z.string()).nullable(),
+	headers: z.any(),
+	createdAt: z.string(),
 });

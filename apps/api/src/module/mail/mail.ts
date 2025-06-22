@@ -43,25 +43,21 @@ mailRouter.get(
 		BasePaginateQuerySchema.merge(SearchQuerySchema.partial()),
 	),
 	async (c) => {
-		const { page, pageSize } = c.req.valid("query");
+		const { page = 1, pageSize = 10 } = c.req.valid("query");
 		const db = createDb(env.DATABASE_URL);
 		const allMails = await db
 			.select()
 			.from(mails)
 			.orderBy(desc(mails.createdAt))
-			.offset((page ?? 1) * (pageSize ?? 10))
+			.offset((page - 1) * pageSize)
 			.limit(pageSize);
+		console.log("allMails: ", allMails);
 
 		const totalResult = await db.select({ count: count() }).from(mails);
 		const total = Number(totalResult[0].count);
 
 		return c.json({
-			code: 200,
-			msg: "Successfully retrieved mails list",
-			list: allMails.map((mail) => ({
-				...mail,
-				createdAt: mail.createdAt.toISOString(),
-			})),
+			list: allMails,
 			total,
 			page: Number(page),
 			pageSize: Number(pageSize),
