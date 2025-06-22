@@ -23,16 +23,17 @@ import {
 	Sparkles,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import posthog from "posthog-js";
-import { useSession } from "~/hooks/query/use-auth";
+import { useLogout, useSession } from "~/hooks/query/use-auth";
 
 export function NavUser() {
 	const { isMobile } = useSidebar();
 	const { t } = useTranslation("navigation");
+	const navigate = useNavigate();
 	const { data: user } = useSession();
-	console.log("user: ", user);
+	const { mutate: logout } = useLogout();
 	if (user?.id && import.meta.env.PROD) {
 		posthog.identify(user.id, {
 			name: user.name,
@@ -40,7 +41,10 @@ export function NavUser() {
 			avatar: user.image,
 		});
 	}
-
+	const handleLogout = () => {
+		logout();
+		navigate("/", { replace: true });
+	};
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem>
@@ -51,10 +55,7 @@ export function NavUser() {
 							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 						>
 							<Avatar className="size-8 rounded-lg">
-								{/* <AvatarImage
-									src={user.data?.user.image || ""}
-									alt={user.data?.user.name}
-								/> */}
+								<AvatarImage src={user.image || ""} alt={user.name} />
 								<AvatarFallback className="rounded-lg">CN</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
@@ -73,7 +74,7 @@ export function NavUser() {
 						<DropdownMenuLabel className="p-0 font-normal">
 							<div className="flex items-center gap-2 px-2 py-1.5 text-left text-sm">
 								<Avatar className="size-8 rounded-lg">
-									<AvatarImage src={user.image || ""} alt={user.name} />
+									<AvatarImage src={user.image} alt={user.name} />
 									<AvatarFallback className="rounded-lg">
 										{user.name?.slice(0, 2)}
 									</AvatarFallback>
@@ -126,7 +127,7 @@ export function NavUser() {
 						<DropdownMenuSeparator className="my-1" />
 						<DropdownMenuItem
 							className="flex items-center gap-2 px-2 py-1.5"
-							onSelect={() => window.location.replace("/")}
+							onSelect={handleLogout}
 						>
 							<LogOut className="size-4" />
 							<span>{t("user.logout")}</span>

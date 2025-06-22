@@ -19,11 +19,12 @@ import { ThemeCustomizer } from "@/components/theme/theme-customizer";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { SIDEBAR_COOKIE_NAME } from "@/constants";
 
-import { getSession } from "~/services/auth";
+import { queryUserSession } from "~/hooks/query/use-auth";
+import { queryClient } from "~/lib/query-client";
 
 export const clientLoader = async () => {
 	try {
-		const session = await getSession();
+		const session = await queryClient.ensureQueryData(queryUserSession());
 
 		if (!session) {
 			return redirect("/login");

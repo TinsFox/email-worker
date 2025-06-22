@@ -4,6 +4,7 @@ import {
 	type ResetPasswordCredentials,
 	getSession,
 	login,
+	logout,
 	register,
 	resetPassword,
 } from "~/services/auth";
@@ -13,6 +14,7 @@ import {
 	useMutation,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
+import { queryClient } from "~/lib/query-client";
 
 export const useLogin = () => {
 	return useMutation({
@@ -37,7 +39,17 @@ export const queryUserSession = () =>
 	queryOptions({
 		queryKey: ["user-session"],
 		queryFn: getSession,
+		staleTime: 1000 * 60 * 5,
 	});
+
+export const useLogout = () => {
+	return useMutation({
+		mutationFn: logout,
+		onSuccess: () => {
+			queryClient.removeQueries({ queryKey: ["user-session"] });
+		},
+	});
+};
 
 export function useSession() {
 	return useSuspenseQuery(queryUserSession());

@@ -206,6 +206,26 @@ authRouter.post(
 		});
 	},
 );
+authRouter.post(
+	"/logout",
+	describeRoute({
+		tags: ["Auth"],
+		summary: "Logout",
+		description: "Logout user",
+		responses: {
+			200: {
+				description: "Logout successful",
+			},
+		},
+	}),
+	async (c) => {
+		deleteCookie(c, "token");
+		return c.json({
+			code: 200,
+			msg: "Logout successful",
+		});
+	},
+);
 
 authRouter.get(
 	"/get-session",

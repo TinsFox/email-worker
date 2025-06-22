@@ -46,6 +46,12 @@ export const getSession = async () => {
 	});
 };
 
+export const logout = async () => {
+	return await apiFetch("/api/auth/logout", {
+		method: "POST",
+	});
+};
+
 export interface ResetPasswordCredentials {
 	oldPassword: string;
 	newPassword: string;
