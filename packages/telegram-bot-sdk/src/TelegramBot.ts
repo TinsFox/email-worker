@@ -1,4 +1,3 @@
-import FormData from "form-data";
 import type {
 	GetUpdatesParams,
 	Message,
@@ -9,13 +8,19 @@ import type {
 	User,
 } from "./types";
 
+interface TelegramBotOptions {
+	token: string;
+	baseURL?: string;
+}
+
 export class TelegramBot {
-	private token: string;
 	private baseURL: string;
 
-	constructor(token: string) {
-		this.token = token;
-		this.baseURL = `https://api.telegram.org/bot${token}`;
+	constructor({
+		token,
+		baseURL = "https://api.telegram.org/bot",
+	}: TelegramBotOptions) {
+		this.baseURL = `${baseURL}${token}`;
 	}
 
 	private async request<T>(
@@ -61,16 +66,21 @@ export class TelegramBot {
 		return this.request<Message>("/sendMessage", "POST", params);
 	}
 
-	// 发送照片
+	// 发送照片 - 适配 Hono/Worker 环境
 	async sendPhoto(params: SendPhotoParams): Promise<Message> {
 		const formData = new FormData();
 
-		// 添加所有参数到 FormData
 		Object.entries(params).forEach(([key, value]) => {
-			if (key === "photo" && Buffer.isBuffer(value)) {
-				formData.append("photo", value, { filename: "photo.jpg" });
+			if (key === "photo") {
+				// 在 Hono/Worker 环境中，直接使用 File 或 Blob
+				if (value instanceof File || value instanceof Blob) {
+					formData.append("photo", value, "photo.jpg");
+				} else if (typeof value === "string") {
+					// 如果是 URL，直接传递
+					formData.append("photo", value);
+				}
 			} else {
-				formData.append(key, value);
+				formData.append(key, String(value));
 			}
 		});
 
@@ -109,5 +119,22 @@ export class TelegramBot {
 			text,
 			parse_mode: parseMode,
 		});
+	}
+
+	// 添加 Webhook 相关方法
+	async setWebhook(url: string, secretToken?: string): Promise<boolean> {
+		const params: Record<string, any> = { url };
+		if (secretToken) {
+			params.secret_token = secretToken;
+		}
+		return this.request<boolean>("/setWebhook", "POST", params);
+	}
+
+	async deleteWebhook(): Promise<boolean> {
+		return this.request<boolean>("/deleteWebhook", "POST");
+	}
+
+	async getWebhookInfo(): Promise<any> {
+		return this.request<any>("/getWebhookInfo");
 	}
 }

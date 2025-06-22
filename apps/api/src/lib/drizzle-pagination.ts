@@ -1,4 +1,5 @@
-import { db } from "@/db";
+import { env } from "cloudflare:workers";
+import { createDb } from "@/db";
 import {
 	type Column,
 	type SQL,
@@ -111,7 +112,7 @@ async function paginateWithLimitOffset<T>(
 	const orderByExpressions = orderBy.map(([col, dir]) =>
 		dir === "asc" ? asc(col) : desc(col),
 	);
-
+	const db = createDb(env.DATABASE_URL);
 	// 获取总数
 	const [{ count }] = await db
 		.select({ count: sql<number>`count(*)` })
@@ -184,7 +185,7 @@ async function paginateWithCursor<T>(
 	const orderByExpressions = orderBy.map(([col, dir]) =>
 		dir === "asc" ? asc(col) : desc(col),
 	);
-
+	const db = createDb(env.DATABASE_URL);
 	// 获取总数
 	const [{ count }] = await db
 		.select({ count: sql<number>`count(*)` })

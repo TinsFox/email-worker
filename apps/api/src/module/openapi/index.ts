@@ -10,7 +10,7 @@ export const openAPIMiddleware = (app: Hono) => {
 	return openAPISpecs(app, {
 		documentation: {
 			info: {
-				title: "poketto stack api",
+				title: "main box api",
 				version: "0.1.0",
 				description: "API documentation for Hono",
 			},

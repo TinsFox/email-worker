@@ -3,6 +3,7 @@
 		"target": "ESNext",
 		"module": "NodeNext",
 		"strict": true,
+		"moduleResolution": "NodeNext",
 		"skipLibCheck": true,
 		"types": ["node"],
 		"jsx": "react-jsx",
@@ -12,5 +13,9 @@
 			"@/*": ["./src/*"]
 		}
 	},
-	"include": ["worker-configuration.d.ts", "src/**/*.ts", "env.ts"]
+	"include": [
+		"worker-configuration.d.ts",
+		"src/**/*.ts",
+		"src/lib/mail/index.mts"
+	]
 }

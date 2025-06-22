@@ -20,7 +20,7 @@ import { Icons } from "@/components/icons";
 import { LanguageSwitch } from "@/components/language-switch";
 import { cn } from "@/lib/utils";
 
-import { signUp } from "@/lib/auth-client";
+import { register } from "~/services/auth";
 
 const signUpSchema = z
 	.object({
@@ -54,21 +54,18 @@ export default function SignUpPage() {
 	});
 
 	async function onSubmit(data: SignUpValues) {
-		await signUp.email({
+		const user = await register({
 			email: data.email,
 			password: data.password,
+			username: data.username,
 			name: data.username,
-			fetchOptions: {
-				onResponse: () => setLoading(false),
-				onRequest: () => setLoading(true),
-				onError: (ctx) => {
-					toast.error(ctx.error.message);
-				},
-				onSuccess: async () => {
-					navigate("/login");
-				},
-			},
 		});
+		if (user) {
+			navigate("/login");
+			toast.success("Account created successfully");
+		} else {
+			toast.error("Failed to create account");
+		}
 	}
 
 	return (

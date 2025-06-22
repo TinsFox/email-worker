@@ -1,126 +1,64 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 // 定义查询参数 Schema
-export const SearchQuerySchema = selectUserSchema.extend({
-	id: z
-		.string()
-		.uuid()
-		.optional()
-		.openapi({
-			param: {
-				name: "id",
-				in: "query",
-			},
-			description: "User ID",
-			example: "123e4567-e89b-12d3-a456-426614174000",
-		}),
-	email: z
-		.string()
-		.optional()
-		.openapi({
-			param: {
-				name: "email",
-				in: "query",
-			},
-			description: "User email",
-			example: "john@example.com",
-		}),
-	username: z
-		.string()
-		.optional()
-		.openapi({
-			param: {
-				name: "username",
-				in: "query",
-			},
-			description: "Username",
-			example: "johndoe",
-		}),
-	status: z
-		.string()
-		.optional()
-		.openapi({
-			param: {
-				name: "status",
-				in: "query",
-			},
-			description: "User status",
-			example: "active",
-		}),
-	role: z
-		.string()
-		.optional()
-		.openapi({
-			param: {
-				name: "role",
-				in: "query",
-			},
-			description: "User role",
-			example: "user",
-		}),
+export const SearchQuerySchema = z.object({
+	id: z.string().uuid().optional(),
+	email: z.string().optional(),
+	username: z.string().optional(),
+	status: z.string().optional(),
+	role: z.string().optional(),
 });
 
 // 定义更新用户 Schema
-export const UpdateUserSchema = selectUserSchema
-	.partial()
-	.pick({
-		name: true,
-		avatar: true,
-		birthdate: true,
-		bio: true,
-		username: true,
-	})
-	.extend({
-		name: z.string().optional().openapi({
-			description: "User's name",
-			example: "John Doe",
-		}),
-		avatar: z.string().optional().openapi({
-			description: "User's avatar URL",
-			example: "https://example.com/avatar.jpg",
-		}),
-		birthdate: z.string().optional().openapi({
-			description: "User's birthdate",
-			example: "1990-01-01",
-		}),
-		bio: z.string().optional().openapi({
-			description: "User's biography",
-			example: "A software developer",
-		}),
-		username: z.string().optional().openapi({
-			description: "User's username",
-			example: "johndoe",
-		}),
-	})
-	.openapi("UpdateUser");
-
-// 定义路由参数 Schema
-export const ParamsSchema = selectUserSchema.pick({ id: true }).extend({
-	id: z
-		.string()
-		.uuid()
-		.openapi({
-			param: {
-				name: "id",
-				in: "path",
-			},
-			example: "123e4567-e89b-12d3-a456-426614174000",
-		}),
+export const UpdateUserSchema = z.object({
+	name: z.string().optional(),
+	avatar: z.string().optional(),
+	birthdate: z.string().optional(),
+	bio: z.string().optional(),
+	username: z.string().optional(),
 });
 
-// 定义用户响应 Schema
-export const UserResponseSchema = selectUserSchema
-	.extend({
+// 定义路由参数 Schema
+export const ParamsSchema = z.object({
+	id: z.string().uuid(),
+});
+
+// 注册请求体
+export const RegisterSchema = z.object({
+	username: z.string().min(3).max(50),
+	email: z.string().email(),
+	password: z.string().min(6),
+	name: z.string().min(2).max(100),
+});
+
+// 登录请求体
+export const LoginSchema = z.object({
+	email: z.string().email(),
+	password: z.string(),
+});
+
+// 重置密码请求体
+export const ResetPasswordSchema = z.object({
+	oldPassword: z.string(),
+	newPassword: z.string().min(6),
+});
+
+// 用户响应数据
+export const UserResponseSchema = z.object({
+	code: z.number(),
+	msg: z.string(),
+	data: z.object({
 		id: z.string(),
+		username: z.string(),
 		email: z.string(),
-		name: z.string().nullable(),
-		avatar: z.string().nullable(),
-		username: z.string().nullable(),
-		status: z.string(),
-		role: z.string(),
+		name: z.string(),
+		emailVerified: z.boolean(),
+		isActive: z.boolean(),
+		lastLoginAt: z.string().nullable(),
+		image: z.string().nullable(),
 		bio: z.string().nullable(),
-		amount: z.string(),
+		role: z.string(),
 		createdAt: z.string(),
 		updatedAt: z.string(),
-	})
-	.openapi("User");
+	}),
+});

@@ -27,11 +27,12 @@ export interface Message {
 	document?: Document;
 	video?: Video;
 }
-
+export type MessageType = "text" | "photo" | "document" | "video";
+export type ChatType = "private" | "group" | "supergroup" | "channel";
 // 聊天类型
 export interface Chat {
 	id: number;
-	type: "private" | "group" | "supergroup" | "channel";
+	type: ChatType;
 	title?: string;
 	username?: string;
 	first_name?: string;
@@ -77,11 +78,12 @@ export interface Update {
 	edited_channel_post?: Message;
 }
 
+export type ParseMode = "Markdown" | "HTML";
 // 发送消息参数
 export interface SendMessageParams {
 	chat_id: number | string;
 	text: string;
-	parse_mode?: "Markdown" | "HTML";
+	parse_mode?: ParseMode;
 	disable_web_page_preview?: boolean;
 	disable_notification?: boolean;
 	reply_to_message_id?: number;
@@ -92,7 +94,7 @@ export interface SendPhotoParams {
 	chat_id: number | string;
 	photo: string | Buffer;
 	caption?: string;
-	parse_mode?: "Markdown" | "HTML";
+	parse_mode?: ParseMode;
 	disable_notification?: boolean;
 	reply_to_message_id?: number;
 }

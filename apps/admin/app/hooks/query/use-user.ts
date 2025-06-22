@@ -1,35 +1,21 @@
 import {
 	keepPreviousData,
-	queryOptions,
 	useMutation,
 	useQuery,
 	useQueryClient,
-	useSuspenseQuery,
 } from "@tanstack/react-query";
 import type { PaginationState } from "@tanstack/react-table";
 import { useNavigate } from "react-router";
 
 import { apiFetch } from "@/lib/api-fetch";
-import { authClient } from "@/lib/auth-client";
-import type { IBetterAuthUsers, ILoginForm, IUserProfile } from "@/schema/user";
+
+import type { IBetterAuthUsers, ILoginForm } from "@/schema/user";
 
 const userKeys = {
 	all: ["users"] as const,
 	list: () => [...userKeys.all, "list"] as const,
 	detail: (id: string) => [...userKeys.all, id] as const,
 };
-
-export const queryUserSession = () =>
-	queryOptions({
-		queryKey: ["user-info"],
-		queryFn: async () => {
-			return await authClient.getSession();
-		},
-	});
-
-export function useSession() {
-	return useSuspenseQuery(queryUserSession());
-}
 
 export function useUserLoginMutation() {
 	return useMutation({
@@ -67,13 +53,15 @@ export function useUsers(
 			...Object.entries(searchParams || {}),
 		],
 		queryFn: async () => {
-			const users = await authClient.admin.listUsers({
+			const users = await apiFetch("/api/users", {
+				method: "GET",
 				query: {
-					limit: 10,
+					page: pageIndex,
+					pageSize: pageSize,
+					...searchParams,
 				},
 			});
-
-			return users;
+			return users.data;
 		},
 		placeholderData: keepPreviousData,
 	});
@@ -99,7 +87,6 @@ export function useUpdateUser() {
 				body: user,
 			}),
 		onSuccess: () => {
-			// 更新用户列表缓存
 			queryClient.invalidateQueries({ queryKey: ["users"] });
 		},
 	});

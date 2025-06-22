@@ -72,14 +72,14 @@ const defaultValues: Partial<ProfileFormValues> = {
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-import { useSession } from "@/lib/auth-client";
+import { useSession } from "~/hooks/query/use-auth";
 
 export function ProfileForm() {
 	const { t } = useTranslation(["settings"]);
 
 	const { data: session, isPending, error, refetch } = useSession();
 
-	const user = session?.user;
+	const user = session;
 	const { toast } = useToast();
 	const form = useForm<ProfileFormValues>({
 		resolver: zodResolver(profileFormSchema),
@@ -96,9 +96,9 @@ export function ProfileForm() {
 				name: user.name,
 				email: user.email,
 				role: user.role,
-				banned: user.banned,
-				banReason: user.banReason,
-				banExpires: user.banExpires,
+				banned: false,
+				banReason: "",
+				banExpires: "",
 			});
 
 			if (result.success) {

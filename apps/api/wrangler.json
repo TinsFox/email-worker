@@ -5,10 +5,8 @@
 	"dev": {
 		"port": 2111
 	},
-	"compatibility_flags": [
-		"nodejs_compat",
-		"nodejs_compat_populate_process_env"
-	],
+	"workers_dev": false,
+	"compatibility_flags": ["nodejs_compat"],
 	"compatibility_date": "2025-02-12",
 	"observability": {
 		"enabled": true
@@ -17,6 +15,12 @@
 		{
 			"binding": "R2_BUCKET",
 			"bucket_name": "mail"
+		}
+	],
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "09a713446a1e4f989983b738952afc83"
 		}
 	]
 }

@@ -27,10 +27,11 @@
 		"quickfix.biome": "explicit",
 		"source.organizeImports.biome": "explicit"
 	},
-	"cSpell.words": ["VITE"],
+	"cSpell.words": ["Hono", "VITE"],
 	"search.exclude": {
 		"**/build/**": true,
 		"**/node_modules/**": true,
-		"**/dist/**": true
+		"**/dist/**": true,
+		"**/.wrangler/**": true
 	}
 }

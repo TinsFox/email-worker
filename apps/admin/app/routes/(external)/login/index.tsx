@@ -13,7 +13,7 @@ import { Input } from "@poketto/ui/input";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router";
-import { toast } from "sonner";
+
 import type { z } from "zod";
 
 import { Icons } from "@/components/icons";
@@ -21,16 +21,16 @@ import { Icons } from "@/components/icons";
 import { LanguageSwitch } from "@/components/language-switch";
 import { cn } from "@/lib/utils";
 
-import { signIn } from "@/lib/auth-client";
 import type { ILoginForm } from "@/schema/user";
 import { loginFormSchema } from "@/schema/user";
 import { Card, CardContent } from "@poketto/ui/card";
 
 import { useState } from "react";
+import { useLogin } from "~/hooks/query/use-auth";
 
 export default function LoginPage() {
 	const [loading, setLoading] = useState(false);
-
+	const { mutate: login } = useLogin();
 	const { t } = useTranslation(["signIn", "common", "errors"]);
 	const redirectUrl =
 		new URLSearchParams(window.location.search).get("redirectTo") ||
@@ -40,33 +40,23 @@ export default function LoginPage() {
 	const form = useForm<ILoginForm>({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
-			email: "admin@shadcn.com",
-			password: "admin@shadcn.com",
+			email: "",
+			password: "",
 		},
 	});
 
 	async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-		await signIn.email(
+		login(
 			{
 				email: values.email,
 				password: values.password,
-				rememberMe: values.rememberMe,
 			},
 			{
-				onRequest: () => {
-					setLoading(true);
-				},
-				onResponse: () => {
-					setLoading(false);
-				},
-				onSuccess() {
+				onSuccess: () => {
+					console.log("redirectUrl: ", redirectUrl);
 					navigate(redirectUrl, {
 						replace: true,
 					});
-					toast.success("Signed in successfully");
-				},
-				onError: (ctx) => {
-					toast.error(ctx.error.message);
 				},
 			},
 		);

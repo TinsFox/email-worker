@@ -1,6 +1,6 @@
 import { createMimeMessage } from "mimetext";
 import * as PostalMime from "postal-mime";
-import type { ForwardEmailConfig, ForwardEmailMessage } from "./types.mts";
+import type { ForwardEmailConfig } from "./types.mts";
 
 export async function forwardEmail(
 	message: EmailMessage,

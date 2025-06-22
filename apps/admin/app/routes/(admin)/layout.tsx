@@ -6,6 +6,7 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@poketto/ui/sidebar";
+
 import { CircleHelp } from "lucide-react";
 import { Link, Outlet, redirect } from "react-router";
 
@@ -18,14 +19,20 @@ import { ThemeCustomizer } from "@/components/theme/theme-customizer";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { SIDEBAR_COOKIE_NAME } from "@/constants";
 
-import { authClient } from "@/lib/auth-client";
+import { getSession } from "~/services/auth";
 
 export const clientLoader = async () => {
-	const session = await authClient.getSession();
-	if (!session.data) {
+	try {
+		const session = await getSession();
+
+		if (!session) {
+			return redirect("/login");
+		}
+
+		return null;
+	} catch (error) {
 		return redirect("/login");
 	}
-	return null;
 };
 
 export default function AdminLayout() {

@@ -23,7 +23,6 @@
 		"@react-email/components": "^0.0.34",
 		"@scalar/hono-api-reference": "^0.7.2",
 		"bcryptjs": "^2.4.3",
-		"better-auth": "^1.2.7",
 		"drizzle-orm": "^0.44.2",
 		"drizzle-zod": "^0.8.2",
 		"fast-xml-parser": "^4.3.5",
@@ -50,6 +49,6 @@
 		"tsx": "^4.19.3",
 		"typescript": "^5.8.2",
 		"vitest": "^2.1.9",
-		"wrangler": "4.19.1"
+		"wrangler": "4.20.5"
 	}
 }

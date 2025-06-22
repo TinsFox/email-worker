@@ -1,7 +1,7 @@
 import { boolean, jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 // 邮件表
-export const emails = pgTable("emails", {
+export const mails = pgTable("emails", {
 	id: text("id").primaryKey(),
 	mailbox: text("mailbox").notNull(), // 收件箱标识
 	from: text("from").notNull(), // 发件人
@@ -20,7 +20,7 @@ export const emails = pgTable("emails", {
 export const attachments = pgTable("attachments", {
 	id: text("id").primaryKey(),
 	emailId: text("email_id")
-		.references(() => emails.id)
+		.references(() => mails.id)
 		.notNull(),
 	filename: text("filename").notNull(),
 	mimeType: text("mime_type").notNull(),
@@ -41,8 +41,8 @@ export const notificationTargets = pgTable("notification_targets", {
 });
 
 // 类型定义
-export type Email = typeof emails.$inferSelect;
-export type NewEmail = typeof emails.$inferInsert;
+export type Email = typeof mails.$inferSelect;
+export type NewEmail = typeof mails.$inferInsert;
 export type Attachment = typeof attachments.$inferSelect;
 export type NewAttachment = typeof attachments.$inferInsert;
 export type NotificationTarget = typeof notificationTargets.$inferSelect;

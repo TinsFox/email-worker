@@ -1,6 +1,4 @@
-import { auth } from "@/lib/auth";
 import type { Context, Next } from "hono";
-import { createMiddleware } from "hono/factory";
 import { jwt } from "hono/jwt";
 
 const authWhiteList = [
@@ -23,13 +21,4 @@ export const authMiddleware = (c: Context, next: Next) => {
 		cookie: c.env.COOKIE_KEY,
 	});
 	return jwtMiddleware(c, next);
-};
-
-export const adminMiddleware = () => {
-	return createMiddleware(async (c, next) => {
-		const session = await auth.api.getSession({
-			headers: c.req.raw.headers,
-		});
-		await next();
-	});
 };
