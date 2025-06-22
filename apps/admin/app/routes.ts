@@ -66,5 +66,10 @@ export default [
 			index("routes/(admin)/system/index.tsx"),
 			route("about", "routes/(admin)/system/about.tsx"),
 		]),
+		...prefix("mail", [
+			route("inbox", "routes/(admin)/mail/inbox.tsx"),
+			route("compose", "routes/(admin)/mail/compose.tsx"),
+			route("read", "routes/(admin)/mail/read.tsx"),
+		]),
 	]),
 ] satisfies RouteConfig;

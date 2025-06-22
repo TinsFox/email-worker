@@ -12,6 +12,7 @@ import {
 	Info,
 	List,
 	ListTree,
+	Mail,
 	MessagesSquare,
 	Orbit,
 	Radar,
@@ -64,6 +65,18 @@ export const menus: IMenu[] = [
 				title: "workplace",
 				icon: Orbit,
 				to: "/dashboard/workplace",
+			},
+		],
+	},
+	{
+		title: "mail",
+		icon: Mail,
+		to: "/mail",
+		children: [
+			{
+				title: "mail",
+				icon: Mail,
+				to: "/mail/inbox",
 			},
 		],
 	},
